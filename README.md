@@ -1,5 +1,12 @@
 # webcam_capture
-Just webcam capture
+Just webcam capture.
+
+Here an image:
+
+![Imatge](/media/Screenshot.png)
+
+By Bet.
+
 
 ## Tips
 https://wiki.archlinux.org/index.php/webcam_setup
