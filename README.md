@@ -3,7 +3,7 @@ Just webcam capture.
 
 Here an image:
 
-![Imatge](/media/Screenshot.png)
+![ImatgeWebcam](media/Screenshot.png)
 
 By Bet.
 
