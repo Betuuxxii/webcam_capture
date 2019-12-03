@@ -11,9 +11,10 @@ int main(int argc, char *argv[])
 {
     cv::VideoCapture camera; //OpenCV video capture object
     cv::Mat image; //OpenCV image object
+    cv::Mat imageCopy; //OpenCV image object
 	int cam_id; //camera id . Associated to device number in /dev/videoX
-	cv::Scalar_<unsigned char> px_value; //pixel value (4-element vector)
 	int user_key; //user pressed key to quit
+	cv::Vec3b pixel_intensity; //pixel RGB intensity
 
 	//check user args
 	switch(argc)
@@ -50,10 +51,48 @@ int main(int argc, char *argv[])
             cv::waitKey();
         }
 
+        //Basic operations with images
+
+        //Print pixel intensity values
+
+  //      float blue = pixel_intensity.val[0];
+  //      float green = pixel_intensity.val[1];
+  //      float red = pixel_intensity.val[2];
+    //    std::cout << "Valors de Blue 150x150 " << blue;
+    //    std::cout << "Valors de Green150x150 " << green;
+  //      std::cout << "Valors de Red150x150 " << red;
+
+
+        //Clone images
+        imageCopy  = image.clone();
+for( int y = 0; y < image.rows; y++ ) {
+  for( int x = 0; x < image.cols; x++) {
+      pixel_intensity = image.at<cv::Vec3b>(y, x);
+    if ((pixel_intensity[1] < 190)&&(x < image.cols/2) ){
+        		// manipulate the central pixel value. Set it as blue
+        		pixel_intensity[0] = pixel_intensity[0] ;
+            pixel_intensity[1] = pixel_intensity[1]+65;
+        	  pixel_intensity[2] =pixel_intensity[2];
+          }
+
+    else if((pixel_intensity[2] < 190)&& (x >= image.cols/2) ){
+        		// manipulate the central pixel value. Set it as blue
+        		pixel_intensity[0] = pixel_intensity[0] ;
+            pixel_intensity[1] = pixel_intensity[1];
+        	  pixel_intensity[2] =pixel_intensity[2]+65;
+          }
+	  imageCopy.at<cv::Vec3b>(y, x) = pixel_intensity;
+      }
+
+    }
+
+
         //show image in a window
-        cv::imshow("Output Window", image);
+        cv::imshow("Original Output Window", image);
+        cv::imshow("Output Window ", imageCopy);
 
 		//Waits 30 millisecond to check if 'q' key has been pressed. If so, breaks the loop. Otherwise continues.
-    	if( (unsigned char)(cv::waitKey(30) & 0xff) == 'q' ) break; 
+    	if( (unsigned char)(cv::waitKey(60) & 0xff) == 'q' ) break;
+
     }
 }
